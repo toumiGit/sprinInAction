@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+    <bean id="juggler" class="springIdol.Juggler">
+        <constructor-arg value="15"/>
+    </bean>
+
+    <bean id="audience" class="springIdol.Audience"/>
+    <bean id="audience2" class="springIdol.AroundAudience"/>
+    <bean id="volunteer" class="springIdol.Volunteer"/>
+    <bean id="magician" class="springIdol.Magician"/>
+
+
+
+    <aop:config>
+        <aop:aspect ref="audience">
+            <aop:pointcut id="performance" expression="execution(* *.perform(..))"/>
+            <aop:before  pointcut-ref="performance" method="takeSeats"/>
+            <aop:after method="applaud" pointcut-ref="performance"/>
+        </aop:aspect>
+
+        <aop:aspect ref="audience2">
+            <aop:around method="watchPerformance" pointcut-ref="performance"/>
+        </aop:aspect>
+
+        <aop:aspect ref="magician">
+            <aop:pointcut id="thinker" expression="execution( * springIdol.Volunteer.thinkOfSomething(String)) and args(thoughts)"/>
+            <aop:before pointcut-ref="thinker"
+                        method="interceptThoughts"
+                        arg-names="thoughts"/>
+        </aop:aspect>
+    </aop:config>
+
+
+
+
+
+</beans>
