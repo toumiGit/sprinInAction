@@ -1,19 +1,31 @@
 package springIdol;
 
+import org.aspectj.lang.annotation.*;
+
+@Aspect
 public class Audience {
-  public void takeSeats() { //<co id="co_takeSeats"/>
-    System.out.println("The audience is taking their seats.");
-  }
+    @Pointcut(
+            "execution(* springIdol.Performer.perform(..))")
+    public void performance() { //<co id="co_definePointcut"/>
+    }
 
-  public void turnOffCellPhones() { //<co id="co_turnOffCellPhones"/>
-    System.out.println("The audience is turning off their cellphones");
-  }
+    @Before("performance()")
+    public void takeSeats() { //<co id="co_takeSeatsBefore"/>
+        System.out.println("The audience is taking their seats.");
+    }
 
-  public void applaud() { //<co id="co_applaud"/>
-    System.out.println("CLAP CLAP CLAP CLAP CLAP");
-  }
+    @Before("performance()")
+    public void turnOffCellPhones() { //<co id="co_turnOffCellPhonesBefore"/>
+        System.out.println("The audience is turning off their cellphones");
+    }
 
-  public void demandRefund() { //<co id="co_demandRefund"/>
-    System.out.println("Boo! We want our money back!");
-  }
+    @AfterReturning("performance()")
+    public void applaud() { //<co id="co_applaudAfter"/>
+        System.out.println("CLAP CLAP CLAP CLAP CLAP");
+    }
+
+    @AfterThrowing("performance()")
+    public void demandRefund() { //<co id="co_demandRefundAfterException"/>
+        System.out.println("Boo! We want our money back!");
+    }
 }

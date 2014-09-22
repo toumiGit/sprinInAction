@@ -18,24 +18,8 @@
 
 
 
-    <aop:config>
-        <aop:aspect ref="audience">
-            <aop:pointcut id="performance" expression="execution(* *.perform(..))"/>
-            <aop:before  pointcut-ref="performance" method="takeSeats"/>
-            <aop:after method="applaud" pointcut-ref="performance"/>
-        </aop:aspect>
+    <aop:aspectj-autoproxy/>
 
-        <aop:aspect ref="audience2">
-            <aop:around method="watchPerformance" pointcut-ref="performance"/>
-        </aop:aspect>
-
-        <aop:aspect ref="magician">
-            <aop:pointcut id="thinker" expression="execution( * springIdol.Volunteer.thinkOfSomething(String)) and args(thoughts)"/>
-            <aop:before pointcut-ref="thinker"
-                        method="interceptThoughts"
-                        arg-names="thoughts"/>
-        </aop:aspect>
-    </aop:config>
 
 
 
