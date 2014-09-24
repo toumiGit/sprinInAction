@@ -4,18 +4,31 @@ apply plugin: 'war'
 sourceCompatibility = 1.8
 version = '1.0'
 
+ext{
+    springVersion = '3.2.11.RELEASE'
+    aopVersion = '1.7.0'
+}
+
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile 'org.springframework:spring-core:3.0.0.RELEASE'
-    compile 'org.springframework:spring-web:3.0.0.RELEASE'
-    compile 'org.springframework:spring-webmvc:3.0.0.RELEASE'
-    compile 'org.springframework:spring-aop:3.0.0.RELEASE'
-    compile 'org.aspectj:aspectjweaver:1.7.0'
-    compile 'org.aspectj:aspectjrt:1.7.0'
+    compile "org.springframework:spring-core:$springVersion"
+    compile "org.springframework:spring-web:$springVersion"
+    compile "org.springframework:spring-webmvc:$springVersion"
+    compile "org.springframework:spring-context:$springVersion"
+
+//    for persitence part
+    compile "org.springframework:spring-jdbc:$springVersion"
+    compile "org.hsqldb:hsqldb:2.3.2"
+
+    compile "org.springframework:spring-aop:$springVersion"
+    compile "org.aspectj:aspectjweaver:$aopVersion"
+    compile "org.aspectj:aspectjrt:$aopVersion"
+
 
 
 
